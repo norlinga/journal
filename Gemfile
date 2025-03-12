@@ -51,6 +51,8 @@ group :development, :test do
   gem "guard-rubocop", "~> 1.5"
   gem "rubocop", "~> 1.73"
   gem "rubocop-rails", "~> 2.30"
+  gem "factory_bot", "~> 6.5"
+  gem "factory_bot_rails", "~> 6.4"
 end
 
 group :development do
