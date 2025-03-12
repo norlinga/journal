@@ -10,13 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_12_171639) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_12_182033) do
   create_table "batches", force: :cascade do |t|
     t.string "status", default: "pending", null: false
     t.datetime "processed_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["status"], name: "index_batches_on_status"
+  end
+
+  create_table "journal_entries", force: :cascade do |t|
+    t.integer "batch_id", null: false
+    t.integer "order_id", null: false
+    t.string "account_type", null: false
+    t.integer "amount", null: false
+    t.string "entry_type", null: false
+    t.boolean "balanced", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["balanced"], name: "index_journal_entries_on_balanced"
+    t.index ["batch_id"], name: "index_journal_entries_on_batch_id"
+    t.index ["entry_type"], name: "index_journal_entries_on_entry_type"
+    t.index ["order_id"], name: "index_journal_entries_on_order_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -38,5 +53,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_12_171639) do
     t.index ["batch_id"], name: "index_orders_on_batch_id"
   end
 
+  add_foreign_key "journal_entries", "batches"
+  add_foreign_key "journal_entries", "orders"
   add_foreign_key "orders", "batches"
 end
