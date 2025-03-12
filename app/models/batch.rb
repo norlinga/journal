@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Batch < ApplicationRecord
+  has_many :orders, dependent: :destroy
+
   enum :status, %w[pending processing completed failed]
 
   before_validation :set_default_status, on: :create
