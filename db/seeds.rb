@@ -1,5 +1,3 @@
-require 'csv'
-
 # The seeds here is just for us to get a real pass through of the Batch+Order import process
 
 module Colors
@@ -19,6 +17,10 @@ unless File.exist?(csv_path)
 end
 
 puts "#{Colors::BLUE}Starting order import from CSV: #{csv_path}#{Colors::RESET}"
+
+# -----------------------------------
+# STEP 1: Create a Batch and Load Orders
+# -----------------------------------
 
 batch = Batch.create!(status: 'pending')
 
@@ -46,3 +48,50 @@ latest_batch = Batch.latest_successful
 order_count = latest_batch.orders.count
 
 puts "#{Colors::GREEN}Import complete! #{order_count} orders imported in Batch ##{latest_batch.id}.#{Colors::RESET}"
+
+# -----------------------------------
+# STEP 2: Process Orders → JournalEntries
+# -----------------------------------
+
+puts "#{Colors::BLUE}Processing orders into journal entries...#{Colors::RESET}"
+
+orders = latest_batch.orders
+journal_entries = []
+
+orders.each do |order|
+  # Normalize financial data to cents
+  price_per_item = (order.price_per_item * 100).to_i
+  shipping = (order.shipping * 100).to_i
+  payment_1_amount = order.payment_1_amount ? (order.payment_1_amount * 100).to_i : 0
+  payment_2_amount = order.payment_2_amount ? (order.payment_2_amount * 100).to_i : 0
+
+  quantity = order.quantity
+  tax_rate = order.tax_rate
+
+  # Calculate derived values
+  total_revenue = price_per_item * quantity
+  total_tax = (total_revenue * tax_rate).round
+  total_debits = total_revenue + shipping + total_tax
+  total_credits = payment_1_amount + payment_2_amount
+
+  # Determine if the order balances
+  is_balanced = (total_debits == total_credits)
+
+  journal_entries += [
+    { batch_id: latest_batch.id, order_id: order.id, account_type: "accounts_receivable", amount: total_revenue, entry_type: "debit", balanced: is_balanced },
+    { batch_id: latest_batch.id, order_id: order.id, account_type: "revenue", amount: total_revenue, entry_type: "credit", balanced: is_balanced },
+
+    { batch_id: latest_batch.id, order_id: order.id, account_type: "accounts_receivable", amount: shipping, entry_type: "debit", balanced: is_balanced },
+    { batch_id: latest_batch.id, order_id: order.id, account_type: "shipping_revenue", amount: shipping, entry_type: "credit", balanced: is_balanced },
+
+    { batch_id: latest_batch.id, order_id: order.id, account_type: "accounts_receivable", amount: total_tax, entry_type: "debit", balanced: is_balanced },
+    { batch_id: latest_batch.id, order_id: order.id, account_type: "sales_tax_payable", amount: total_tax, entry_type: "credit", balanced: is_balanced },
+
+    { batch_id: latest_batch.id, order_id: order.id, account_type: "cash", amount: total_credits, entry_type: "debit", balanced: is_balanced },
+    { batch_id: latest_batch.id, order_id: order.id, account_type: "accounts_receivable", amount: total_credits, entry_type: "credit", balanced: is_balanced }
+  ]
+end
+
+JournalEntry.insert_all(journal_entries) if journal_entries.any?
+
+puts "#{Colors::GREEN}Journal entry processing complete! #{journal_entries.size} entries created.#{Colors::RESET}"
