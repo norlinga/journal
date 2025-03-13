@@ -55,6 +55,7 @@ journal/
 docker-compose up --build
 ```
 This will:
+
 ✅ Start Rails API at `http://localhost:3000`  
 ✅ Which also serves the React frontend at `http://localhost:3000`  
 ✅ Persist SQLite data using a **Docker volume**
@@ -109,8 +110,11 @@ GET /api/journal/2023-02
 ## ⚡ Exploring & Debugging
 
 ### 🔹 Check Processed Data via Rails Console
+Start an instance of the application, and then connect to it as follows:
+
 ```sh
-docker-compose run app bin/rails c
+docker-compose up --build
+docker-compose exec app bin/rails c
 > JournalEntry.count
 > Batch.latest_successful
 ```
