@@ -3,7 +3,7 @@
 class Batch < ApplicationRecord
   has_many :orders, dependent: :destroy
 
-  enum :status, %w[pending processing completed failed]
+  enum :status, { pending: "pending", processing: "processing", completed: "completed", failed: "failed" }
 
   before_validation :set_default_status, on: :create
 
