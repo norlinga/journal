@@ -49,7 +49,7 @@ group :development, :test do
   gem "guard", "~> 2.19"
   gem "guard-rspec", "~> 4.7"
   gem "guard-rubocop", "~> 1.5"
-  gem "rubocop", "~> 1.73"
+  gem "rubocop", "~> 1.74"
   gem "rubocop-rails", "~> 2.30"
   gem "factory_bot", "~> 6.5"
   gem "factory_bot_rails", "~> 6.4"
