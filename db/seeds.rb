@@ -9,7 +9,7 @@ module Colors
 end
 
 # This is where I checked out the `interview-fullstack` repo
-csv_path = Rails.root.join('../interview-fullstack/data.csv')
+csv_path = Rails.root.join('data.csv')
 
 unless File.exist?(csv_path)
   puts "#{Colors::RED}ERROR: CSV file not found at #{csv_path}. Please ensure the file exists.#{Colors::RESET}"
