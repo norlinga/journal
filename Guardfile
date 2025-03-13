@@ -28,7 +28,8 @@ guard :rspec, cmd: "bundle exec rspec" do
   require "guard/rspec/dsl"
   dsl = Guard::RSpec::Dsl.new(self)
 
-  # Feel free to open issues for suggestions and improvements
+  watch(%r{^app/blueprints/(.+)\.rb$}) { |m| "spec/blueprints/#{m[1]}_spec.rb" }
+  watch(%r{^spec/blueprints/(.+)_spec\.rb$}) { |m| "spec/blueprints/#{m[1]}_spec.rb" }
 
   # RSpec files
   rspec = dsl.rspec
