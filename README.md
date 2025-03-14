@@ -135,6 +135,17 @@ Frontend **source code** is in `frontend/`, and is built into `public/` for Rail
 
 ---
 
+## 📝 Note on Journal Summary Tables
+
+This project includes **two versions** of the journal summary table:
+
+1. **A dynamic version** that efficiently organizes journal entries but does not fully match the exact format outlined in the challenge.
+2. **A structured "brute force" version** that closely follows the intended design but relies on a fixed layout rather than dynamically generated content.
+
+While restructuring the API response from the Rails app could have made both approaches cleaner, I ultimately decided that the implementation as it stands sufficiently demonstrates the necessary concepts and functionality. Given the time spent on the project, I felt it was the right moment to move forward.
+
+---
+
 ## 🧪 Running Tests
 
 ### 🔹 Running the Full Test Suite
@@ -156,5 +167,3 @@ This project was designed to showcase:
 - **Modular service patterns** with Interactors.
 - **Fast and minimal API responses** via Blueprinter.
 - **Seamless frontend-backend integration** using React & Rails.
-
-🚀 **To deploy, simply run `docker-compose up --build` and start exploring!**
