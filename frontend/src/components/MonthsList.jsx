@@ -29,17 +29,23 @@ const MonthsList = ({ onSelectMonth }) => {
   if (error) return <p className="error">{error}</p>;
 
   return (
-    <div>
+    <div className="sidebar">
       <h2>Available Months</h2>
       <ul>
         {months.map((month) => (
           <li key={month.link}>
-            <button onClick={() => handleClick(month)}>
-              {month.month} ({month.order_count} orders)
+            <button className="month-button" onClick={() => handleClick(month)}>
+              {month.month} ({month.order_count})
             </button>
           </li>
         ))}
       </ul>
+
+      <p>
+        <a href="http://localhost:3000/maintenance_tasks" target="_blank" rel="noopener noreferrer">
+        MaintenanceTasks
+        </a>
+      </p>
     </div>
   );
 };

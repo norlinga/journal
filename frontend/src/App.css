@@ -1,42 +1,91 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap");
+
+body {
+  font-family: "Inter", sans-serif;
+  color: #333;
+  margin: 0;
+  padding: 0 20px;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.container {
+  display: flex;
+  height: 100vh;
+  padding: 0 20px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.sidebar {
+  width: 25em;
+  padding: 15px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.sidebar h2 {
+  font-size: 2em;
+  margin-bottom: 1em;
 }
 
-.card {
-  padding: 2em;
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
 }
 
-.read-the-docs {
-  color: #888;
+.month-button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 5px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.month-button:hover {
+  background: #0056b3;
+}
+
+.content {
+  flex-grow: 1;
+  padding: 15px;
+  background-color: #ffffff;
+  border-left: 1px solid #aaa;
+  overflow-y: auto;
+  padding-left: 3em;
+  margin-left: 2em;
+}
+
+.content h1 {
+  font-size: 2.5em;
+  margin-bottom: 1em;
+}
+
+.alternate-journal-summary {
+  padding-top:5em;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background: #f4f4f4;
+  font-weight: bold;
+}
+
+tfoot td {
+  font-weight: bold;
+  background: #eaeaea;
+}
+
+tbody tr:hover {
+  background: #f9f9f9;
 }
