@@ -65,6 +65,7 @@ This will:
 1️⃣ **Install dependencies:**
 ```sh
 bundle install
+bundle exec rails db:reset
 npm install --prefix frontend
 ```
 
