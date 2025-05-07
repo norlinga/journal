@@ -9,7 +9,7 @@ gem "turbo-rails"
 gem "stimulus-rails"
 gem "tailwindcss-rails"
 
-gem "maintenance_tasks", "~> 2.11"
+gem "maintenance_tasks", "~> 2.12"
 gem "interactor", "~> 3.1"
 gem "blueprinter", "~> 1.1"
 
