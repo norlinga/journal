@@ -50,7 +50,7 @@ group :development, :test do
   gem "guard-rspec", "~> 4.7"
   gem "guard-rubocop", "~> 1.5"
   gem "rubocop", "~> 1.73"
-  gem "rubocop-rails", "~> 2.30"
+  gem "rubocop-rails", "~> 2.32"
   gem "factory_bot", "~> 6.5"
   gem "factory_bot_rails", "~> 6.4"
 end
